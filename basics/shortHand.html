@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <title>Project one</title>
+        
+    </head>
+    <body>
+        <div id="app">
+           <a :href="google">Go to google</a>
+           <hr/>
+           <button @:click="alertSomething">Alert something</button>
+        </div>
+    </body>
+    <script>
+        const { createApp, ref } = Vue;
+        createApp({
+            setup(){
+                const google = ref('http://google.com');
+                const alertSomething = () => {
+                    alert('Hello !!');
+                }
+                return { google, alertSomething }
+            }
+        }).mount('#app')
+    </script>
+</html>

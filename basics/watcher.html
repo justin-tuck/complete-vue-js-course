@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <title>Project One - Forms</title>
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div>Count: {{count}}</div>
+            <button v-on:click="count++">Other action</button>
+
+            <div>Count Other: {{countObj.number}}</div>
+            <button v-on:click="countObj.number++">Other action</button>
+        </div> 
+    </body>
+    <script>
+        const { createApp, ref, watch, reactive } = Vue;
+        createApp({
+            setup() {
+
+                const count = ref(0)
+
+                watch(count, (newCount, oldCount) => {
+                    console.log(`New is ${newCount} but old is ${oldCount}`)
+                })
+
+                const countObj = reactive({
+                    number: 0,
+                    other: 'Other prop'
+                })
+
+                watch(()=>countObj.number, (newCount, oldCount) => {
+                    console.log(`New is ${newCount} but old is ${oldCount}`)
+                })
+
+                watch(()=>[countObj.number, countObj.other], (newCount, oldCount) => {
+                    console.log(newCount, 'New')
+                    console.log(oldCount, 'Old')
+                })
+
+                return {
+                    count,
+                    countObj
+                }
+            }
+        }).mount('#app');
+    </script>
+</html>

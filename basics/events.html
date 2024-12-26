@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <title>Project One - Events</title>
+        <style>
+            .box {
+                background: red;
+                width: 200px;
+                height: 200px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <h1>{{name}}</h1>
+            <div v-on:click.right="updateName('Crazy Horse')">
+                Right Click me!
+            </div>
+            <button v-on:click="updateName('Justin', $event)">
+                Click Me!
+            </button>
+            <button v-on:dblclick="updateName('Double Justin')">
+               Double  Click Me!
+            </button>
+
+            <hr />
+            <div class="box" v-on:mousemove="getCoord">Hover</div>
+            <p>x: {{coord.x}} </p>
+            <p>y: {{coord.y}} </p>
+
+            <hr />
+            <form v-on:submit.prevent="handleForm">
+                <input/>
+                <button type="submit">Submit</button>
+            </form>
+        </div> 
+    </body>
+    <script>
+        const { createApp, ref, reactive } = Vue;
+        createApp({
+            setup() {
+
+                const name = ref('Francis');
+                function updateName(newName, event) {
+                    console.log(event)
+                    name.value = newName
+                }
+
+                const coord = ref({x:0, y:0});
+
+                function getCoord(e) {
+                    coord.value.x = e.clientX
+                    coord.value.y = e.clientY;
+                }
+
+                function handleForm() {
+                    console.log("Form submitted")
+                }
+
+
+                return {
+                    name,
+                    updateName,
+                    coord,
+                    getCoord,
+                    handleForm
+                }
+            }
+        }).mount('#app');
+    </script>
+</html>

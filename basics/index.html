@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <title>Project one</title>
+    </head>
+    <body>
+        <div id="app">
+            <p>{{greetings}} - {{date}}</p>
+            <p>Is it true: {{isTrue ? 'Yes' : 'No'}}</p>
+            <p>{{names[0]}}</p>
+            <p>{{obj.pokemon}}</p>
+            <p>{{message()}}</p>
+            <p>Count = {{count}}</p> 
+            {{changeCount()}}
+
+            <p>Name: {{user.name}}</p>
+            <p>occupation: {{user.occupation}}</p>
+            <p>age: {{user.age}}</p>
+
+            <img v-bind:src="image.src" v-bind:alt="image.alt" />
+            <hr/>
+            <a v-bind:href="link">Go to google</a>
+            <hr />
+            <p v-text="text"></p>
+            <hr />
+            <p v-html="html"></p>
+            <hr/>
+            <!-- If Else must be next together -->
+            <p v-if="userTemp.age < userTemp.allowedAge">
+                You are not old enough.
+            </p>
+            <p v-else-if="checkUser">
+                Hi Francis 
+            </p>
+            <p v-else=>
+                You are old enough! 
+            </p>
+            <hr/>
+            <p v-show="true">
+                Show it
+            </p>
+            <p v-show="false">
+                don't show it
+            </p>
+            <hr />
+            <ul>
+                <li v-for="(name, index) in names">
+                    {{index + 1}}: {{name}}
+                </li>
+            </ul>
+            <hr />
+            <ul>
+                <li v-for="car in cars">
+                    {{car.brand}} -- {{car.color}}
+                </li>
+            </ul>
+            <hr />
+            <ul>
+                <li v-for="( value, key,  index) in userTemp">
+                    {{index}} - {{key}}:{{value}} 
+                </li>
+            </ul>
+            <hr />
+            <h1 v-once>{{francis}}</h1>
+            <h1>{{francis}}</h1>
+        </div> 
+    </body>
+    <script>
+        const { createApp, ref, reactive } = Vue;
+        createApp({
+            setup() {
+                const date = new Date().toLocaleDateString();
+                const greetings = 'Hello World!'
+                const isTrue = false; 
+                const names = ['Celeste', 'Justin', 'Mandy']
+                const obj = {pokemon:"pikachu"}
+ 
+                const message = () => 'message from function'
+
+                let count = ref(0); 
+            
+
+                const changeCount = () => {
+                    setTimeout(() => {
+                        count.value = 1; 
+                    }, 1000);
+                }
+
+                let user = reactive({
+                    name: 'Francis',
+                    occupation: 'DEV',
+                    age: 18
+                });
+                   
+                const updateAge = () => {
+                    setTimeout(() => {
+                        user.age = user.age + 1; 
+                    }, 1000);
+                }
+
+                updateAge(); 
+
+                let image = ref({
+                    src:'http://picsum.photos/200/300',
+                    alt:'An image'
+                })
+
+                let link = ref('https://google.com')
+                const text = 'My Text';
+                // should sanitize before
+                const html = '<strong>My Html</strong>'
+
+
+                const userTemp = ref({
+                    name: 'Francis',
+                    lastName: 'Jones',
+                    age: 21,
+                    allowedAge: 18
+                });
+
+                function checkUser() {
+                    return userTemp.name === 'Francis'
+                }
+
+                const cars = ref([
+                    {brand: 'Ferrari', color:'Red'},
+                    {brand: 'Fiat', color:'Blue'},
+                    {brand: 'Ford', color:'Pink'},
+                ])
+
+                const francis = ref('Francis')
+
+                function updateFrancis() {
+                    setTimeout(()=> {
+                        francis.value = 'Steve'
+                    }, 2000)
+                }
+                updateFrancis();
+
+                return {
+                    greetings,
+                    isTrue,
+                    names,
+                    obj,
+                    date,
+                    message,
+                    count,
+                    changeCount,
+                    user,
+                    image,
+                    link,
+                    text,
+                    html,
+                    userTemp,
+                    checkUser,
+                    cars,
+                    francis
+                }
+            }
+        }).mount('#app');
+    </script>
+</html>

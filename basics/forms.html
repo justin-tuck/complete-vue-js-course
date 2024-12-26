@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <title>Project One - Forms</title>
+        <style>
+            .element {
+                color:white;
+                background:black;
+                padding:10px
+            }
+            .blue {
+                background:blue
+            }
+            .green {
+                background: green;
+            }
+            .red {
+                background: red;
+            }
+            .large {
+                font-size: 40px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <form v-on:submit.prevent="formHandler">
+                <label>Name: </label>
+                <input type="text" v-model.trim="formData.name"/>
+                <hr />
+
+                <label>Last Name: </label>
+                <input type="text" v-model.trim="formData.lastName"/>
+                <hr />
+                <label>age: </label>
+                <input type="text" v-model.number.trim="formData.age"/>
+                <hr />
+                <input type="checkbox" id="checkbox" v-model="formData.checked"/>
+                <hr />
+                <button type="submit">Submit</button>
+            </form>
+        </div> 
+    </body>
+    <script>
+        const { createApp, ref, reactive } = Vue;
+        createApp({
+            setup() {
+
+                const formData = ref({
+                    name:'',
+                    lastName:'',
+                    age:'',
+                    checked: false
+                })
+                
+                function formHandler(){
+                    console.log(formData.value)
+                }
+                return {
+                    formData,
+                    formHandler
+                }
+            }
+        }).mount('#app');
+    </script>
+</html>

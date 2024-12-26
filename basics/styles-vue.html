@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <title>Project One - Forms</title>
+        <style>
+            .element {
+                color:white;
+                background:black;
+                padding:10px
+            }
+            .blue {
+                background:blue
+            }
+            .green {
+                background: green;
+            }
+            .red {
+                background: red;
+            }
+            .large {
+                font-size: 40px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div class="element" v-bind:class="{red: redColor, large: true}"  v-on:click="redColor = !redColor">
+                This is my element
+            </div>
+            <div class="element"v-bind:class="{red: true}">
+                This is my red element
+            </div>
+            <hr />
+            <div class="element"
+                v-bind:class="colors">This is my cool element</div>
+            <button v-on:click="cycleColors">
+                Cycle
+            </button>
+            <hr/>
+            <div class="element" v-bind:class="[colorObj]">
+                This is my red element
+            </div>
+            <button v-on:click="cycleColorObj">
+                Cycle
+            </button>
+            <hr />
+            <div class="element" v-bind:style="colors.newStyle">
+                This is my element
+            </div>
+        </div> 
+    </body>
+    <script>
+        const { createApp, ref, reactive } = Vue;
+        createApp({
+            setup() {
+
+                const redColor = ref(false); 
+                const colors = reactive({
+                    blue: false,
+                    red: false,
+                    green: false,
+                    newStyle: {
+                        fontSize:'50px',
+                        border:'5px solid green'
+                    }
+                })
+
+                function cycleColors() {
+                    if(colors.blue) {
+                        colors.blue = false;
+                        colors.red = true
+                    } else if(colors.red) {
+                        colors.red = false;
+                        colors.green = true
+                    } else if(colors.green) {
+                        colors.green = false
+                    } else {
+                        colors.blue = true;
+                    }
+                }
+
+                let colorObj = ref('')
+
+                function cycleColorObj() {
+                    switch(colorObj.value) {
+                        case 'blue': 
+                            colorObj.value = 'red';
+                            break;
+                        case 'red':
+                            colorObj.value = 'green';
+                            break;
+                        case 'green':
+                            colorObj.value = '';
+                        default:
+                            colorObj.value = 'blue';
+                    }
+    
+                }
+
+                
+
+                return {
+                    redColor,
+                    colors,
+                    cycleColors,
+                    colorObj,
+                    cycleColorObj
+                }
+            }
+        }).mount('#app');
+    </script>
+</html>

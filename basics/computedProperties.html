@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <title>Project One - Forms</title>
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <input v-model="data.user"/>
+            <button v-on:click="toggleActive">Other Action</button>
+            <hr />
+            <div>
+                Message: {{ message }}
+            </div>
+
+            <div>
+                Active: {{isActive}}
+            </div>
+        </div> 
+    </body>
+    <script>
+        const { createApp, ref, computed } = Vue;
+        createApp({
+            setup() {
+                const data = ref({
+                    user: '',
+                    active: false
+                })
+
+                const message = computed(() => {
+                    console.log("Message !!!")
+                    return data.value.user === 'Francis' ? 'Welcome!' : 'Not allowed'
+                })
+                
+                const isActive = computed(()=> {
+                    console.log("Active !!!")
+                    return data.value.active ? 'Active!' : 'Not active'
+                })
+
+                function toggleActive() {
+                    data.value.active = !data.value.active
+                }
+
+                return {
+                    data,
+                    message,
+                    toggleActive,
+                    isActive
+                }
+            }
+        }).mount('#app');
+    </script>
+</html>
