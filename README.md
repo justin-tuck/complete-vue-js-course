@@ -298,4 +298,10 @@ WHen leaving a page you can use the vue router hook:
 
 ```
 
+## Pinia 
+
+[Pinia](https://pinia.vuejs.org/) is the store / state management 
+
+
+
  
